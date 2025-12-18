@@ -25,6 +25,9 @@ void mainInterface(){
       else if (r == 2){
         linkedListInterface();
       }
+      else if (r == 'q'){
+        break;
+      }
       else{
         throw r;
       }
