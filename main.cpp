@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <fstream>
 #include <arr.h>
 #include <llist.h>
 using namespace std;
@@ -9,7 +11,7 @@ int main() {
 }
 
 void mainInterface(){
-  int r;
+  int choice;
   while (true){
     try
     {
@@ -18,21 +20,21 @@ void mainInterface(){
         << "-----------------------------------------------------------------------" << endl
         << " 1. Array" << endl
         << " 2. Linked List" << endl;
-      cin >> r;
-      if (r == 1){
+      cin >> choice;
+      if (choice == 1){
         arrayInterface();
       }
-      else if (r == 2){
+      else if (choice == 2){
         linkedListInterface();
       }
-      else if (r == 'q'){
-        break;
+      else if (choice == 'q'){
+        exit(0);
       }
       else{
-        throw r;
+        throw choice;
       }
     }
-    catch(int r)
+    catch(int choice)
     {
       cout << "Invalid Input" << endl;
       cin.clear();
