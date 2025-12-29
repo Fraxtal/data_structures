@@ -1,8 +1,6 @@
 #include <iostream>
-#include <string>
 #include <fstream>
 #include <arr.h>
-#include <llist.h>
 using namespace std;
 
 int main() {
