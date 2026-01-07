@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <arr.h>
+#include <arr.hpp>
 using namespace std;
 
 int main() {
