@@ -1,17 +1,26 @@
 #pragma once
-#include <iostream>
-#include <node.hpp>
 #include <string>
-using namespace std;
 
-class linkedlist{
-private:
-    node*head;
-    node*tail;
-public:
-    linkedlist();
-    void insert(string, string, string, string, string, string);
-    void search(string);
-    void sort(string);
-    void display();
+struct Node {
+    int id;
+    std::string name;
+    int seatRow;
+    int seatCol;
+    std::string seatClass;
+    Node* next = nullptr;
 };
+
+class LinkedList {
+private:
+    Node* head = nullptr;
+    Node* tail = nullptr;
+public:
+    LinkedList();
+    ~LinkedList();
+    void insert(int id, const std::string& name, int row, int col, const std::string& seatClass);
+    Node* searchByName(const std::string& name) const;
+    void sortById();
+    void display() const;
+};
+
+void linkedListInterface();
