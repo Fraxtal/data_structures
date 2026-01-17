@@ -18,8 +18,8 @@ public:
     LinkedList();
     ~LinkedList();
     void insert(int id, const std::string& name, int row, int col, const std::string& seatClass);
-    Node* searchByName(const std::string& name) const;
-    void sortById();
+    Node* search(const std::string& name) const;
+    void sort();
     void display() const;
 };
 
