@@ -3,7 +3,7 @@
 #include <string>
 #include <iomanip>
 
-struct Node {
+struct Passenger {
     int id;
     std::string name;
     int seatRow;
@@ -11,7 +11,7 @@ struct Node {
     std::string seatClass;
 };
 
-class Array {
+class PassengerArray {
 private:
     static const int MAX_CAPACITY = 10000;
     static const int ROWS = 31;
