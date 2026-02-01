@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "arr.hpp"
+#include "array.hpp"
 #include "linkedlist.hpp"
 
 void mainInterface(){
