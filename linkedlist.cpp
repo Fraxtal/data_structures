@@ -65,8 +65,8 @@ bool LinkedList::deletion(int id) {
 	return false;
 }
 
-Node* LinkedList::search(const string& name) const {
-    for (Node* cur = head; cur; cur = cur->next) if (cur->name == name) return cur;
+Node* LinkedList::search(int id) {
+    for (Node* cur = head; cur; cur = cur->next) if (cur->id == id) return cur;
     return nullptr;
 }
 
@@ -154,84 +154,90 @@ void linkedListInterface(){
 	LinkedList list;
 	int option = -1;
 	bool running = true;
+	string temp;
 	while (running)
 	{
-		cout << "Please select an operation to proceed(Enter option's number):" << endl 
-		<< "1. Load Passenger Data" << endl
-		<< "2. Insert New Data" << endl
-		<< "3. Delete Data" << endl
-		<< "4. Search by Name" << endl
-		<< "5. Sort Data" << endl
-		<< "6. Display Data" << endl
-		<< "7. Exit" << endl;
-		cin >> option;
-		switch (option) {
-			case 1 : {
-				list.load();
-				break;
-			}
-			case 2 : {
-				string name, seatCol, seatClass;
-				int seatRow;
-				cout << "Please enter name, seat row, seat column and seat class: ";
-				cin >> name >> seatRow >> seatCol >> seatClass;
-				list.insertion((list.getTail()->id+1), name, seatRow, seatCol, seatClass);
-				break;
-			}
-			case 3 : {
-				int id;
-				cout << "Please enter the ID to delete: ";
-				cin >> id;
-				if (list.deletion(id)) {
-					cout << "Deletion completed!" << endl;
-				} else {
-					cout << "ID not found!" << endl;
+		try {
+			option = -1;
+			cout << "Please select an operation to proceed(Enter option's number):" << endl 
+			<< "1. Load Passenger Data" << endl
+			<< "2. Insert New Data" << endl
+			<< "3. Delete Data" << endl
+			<< "4. Search by Name" << endl
+			<< "5. Sort Data" << endl
+			<< "6. Display Data" << endl
+			<< "7. Exit" << endl;
+			cin >> temp;
+			option = stoi(temp);
+			switch (option) {
+				case 1 : {
+					list.load();
+					break;
 				}
-				break;
-			}
-			case 4 : {
-				string name;
-				cout << "Please enter the name to search: ";
-				cin.ignore();
-				getline(cin, name);
-				Node* temp = list.search(name);
-				if (temp != nullptr) {
-					cout << "ID: " << temp->id << endl
-					<< "Name: " << temp->name << endl
-					<< "Seat Row: " << temp->seatRow << endl
-					<< "Seat Column: " << temp->seatCol << endl
-					<< "Seat Class: " << temp->seatClass << endl;
+				case 2 : {
+					string name, seatCol, seatClass;
+					int seatRow;
+					cout << "Please enter name, seat row, seat column and seat class: ";
+					cin >> name >> seatRow >> seatCol >> seatClass;
+					list.insertion((list.getTail()->id+1), name, seatRow, seatCol, seatClass);
+					break;
 				}
-				break;
+				case 3 : {
+					int id;
+					cout << "Please enter the ID to delete: ";
+					cin >> id;
+					if (list.deletion(id)) {
+						cout << "Deletion completed!" << endl;
+					} else {
+						cout << "ID not found!" << endl;
+					}
+					break;
+				}
+				case 4 : {
+					int id;
+					cout << "Please enter the name to search: ";
+					cin >> id;
+					Node* temp = list.search(id);
+					if (temp != nullptr) {
+						cout << "ID: " << temp->id << endl
+						<< "Name: " << temp->name << endl
+						<< "Seat Row: " << temp->seatRow << endl
+						<< "Seat Column: " << temp->seatCol << endl
+						<< "Seat Class: " << temp->seatClass << endl;
+					}
+					break;
+				}
+				case 5 : {
+					int criteria;
+					string descending;
+					cout << "Please select the criteria to sort(Enter option's number):" << endl
+					<< "1. ID" << endl
+					<< "2. Name" << endl
+					<< "3. Seat" << endl;
+					cin >> criteria;
+					cout << "Do you want to sort it as descending order?(Enter \"Y\" for yes): ";
+					cin >> descending;
+					bool desc = (descending == "Y" ? true : false);
+					list.sort(criteria, desc);
+					cout << "Sort Done" << endl;
+					break;
+				}
+				case 6 : {
+					list.display();
+					cout << "The end of data"<< endl;
+					break;
+				}
+				case 7 : {
+					running = false;
+					break;
+				}
+				default : {
+					cout << "Invalid input! Please try again" << endl;
+					break;
+				}
 			}
-			case 5 : {
-				int criteria;
-				string descending;
-				cout << "Please select the criteria to sort(Enter option's number):" << endl
-				<< "1. ID" << endl
-				<< "2. Name" << endl
-				<< "3. Seat" << endl;
-				cin >> criteria;
-				cout << "Do you want to sort it as descending order?(Enter \"Y\" for yes): ";
-				cin >> descending;
-				bool desc = (descending == "Y" ? true : false);
-				list.sort(criteria, desc);
-				cout << "Sort Done" << endl;
-				break;
-			}
-			case 6 : {
-				list.display();
-				cout << "The end of data"<< endl;
-				break;
-			}
-			case 7 : {
-				running = false;
-				break;
-			}
-			default : {
-				cout << "Invalid input! Please try again" << endl;
-				break;
-			}
+		} catch (exception exception) {
+			cout << "Invalid input! Please try again" << endl;
 		}
 	}
 	
