@@ -20,7 +20,7 @@ public:
     void insertion(int id, const std::string& name, int row, std::string col, const std::string& seatClass);
     void load();
 	bool deletion(int id);
-    Node* search(const std::string& name) const;
+    Node* search(int id);
     Node* split(Node* head);
     bool seatCompare(Node* first, Node* second);
     Node* merge(Node* first, Node* second, int criteria, bool desc);
