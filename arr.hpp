@@ -30,6 +30,7 @@ public:
     void insert(int id, const std::string& name, int row, int col, const std::string& seatClass);
     Passenger* search(const std::string& name) const;
     void deletePassenger(int id); // Changed name to avoid conflict with 'delete' keyword
+    void sort();
     void display() const;
     void displayGrid() const;
 };
