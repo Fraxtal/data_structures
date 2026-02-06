@@ -1,4 +1,9 @@
-#include "arr.hpp"
+#include "array.hpp"
+//#pragma once
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
 
 PassengerArray::PassengerArray() : count(0) {
     // Initialize all array elements to nullptr
