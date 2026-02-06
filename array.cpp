@@ -18,25 +18,22 @@ PassengerArray::~PassengerArray() {
 }
 
 void loadCSV(PassengerArray& pa) {
-    std::ifstream file("flight_passenger_data.csv"); 
+    std::ifstream file("C:\\Users\\User\\Desktop\\Homework Folder\\DS\\data_structures\\data\\flight_passenger_data.csv"); 
     if (!file.is_open()) {
         std::cout << "Error: Could not open file.\n";
         return;
     }
     std::string line;
-    std::getline(file, line); // Skip header
+    std::getline(file, line);
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string idStr, name, rowStr, colStr, sClass;
-        
         std::getline(ss, idStr, ',');
         std::getline(ss, name, ',');
         std::getline(ss, rowStr, ',');
         std::getline(ss, colStr, ',');
         std::getline(ss, sClass, ',');
-
         if(idStr.empty()) continue;
-
         int id = std::stoi(idStr);
         int row = std::stoi(rowStr);
         int col = colStr[0] - 'A'; 
@@ -44,6 +41,28 @@ void loadCSV(PassengerArray& pa) {
     }
     std::cout << "Data loaded successfully.\n";
     file.close();
+}
+
+void saveCSV(const PassengerArray& pa) {
+    std::ofstream file("C:\\Users\\User\\Desktop\\Homework Folder\\DS\\data_structures\\data\\flight_passenger_data.csv");
+
+    if (!file.is_open()) {
+        std::cout << "Error: Could not open file for saving.\n";
+        return;
+    }
+    file << "PassengerID,Name,SeatRow,SeatColumn,Class\n";
+    for (int i = 0; i < pa.getCount(); i++) {
+        Passenger* p = pa.getPassenger(i);
+        if (p != nullptr) {
+            file << p->id << ","
+                 << p->name << ","
+                 << p->seatRow << ","
+                 << (char)('A' + p->seatCol) << ","
+                 << p->seatClass << "\n";
+        }
+    }
+    file.close();
+    std::cout << "All changes saved to CSV file.\n";
 }
 
 void PassengerArray::insert(int id, const std::string& name, int row, int col, const std::string& seatClass) {
@@ -79,15 +98,10 @@ void PassengerArray::deletePassenger(int id) {
         if (manifest[i]->id == id) {
             int r = manifest[i]->seatRow;
             int c = manifest[i]->seatCol;
-            
-            // Remove from grid if applicable
             if (r >= 1 && r < ROWS && c >= 0 && c < COLS) {
                 grid[r][c] = nullptr;
             }
-
             delete manifest[i];
-
-            // Shift array to maintain 1D continuity
             for (int j = i; j < count - 1; j++) {
                 manifest[j] = manifest[j + 1];
             }
@@ -151,20 +165,33 @@ void arrayInterface() {
             int option = std::stoi(input);
             switch (option) {
                 case 1: {
-                    int id, row; char colChar; std::string name, sClass;
-                    std::cout << "Enter ID, Name, Row (1-30), Col (A-F), Class: ";
-                    std::cin >> id >> name >> row >> colChar >> sClass;
+                    int id, row;
+                    char colChar;
+                    std::string name, sClass;
+                    std::cout << "Enter Passenger ID: ";
+                    std::cin >> id;
+                    std::cout << "Enter Name: ";
+                    std::getline(std::cin >> std::ws, name); 
+                    std::cout << "Enter Row (1-30): ";
+                    std::cin >> row;
+                    std::cout << "Enter Column (A-F): ";
+                    std::cin >> colChar;
+                    std::cout << "Enter Class (First/Business/Economy): ";
+                    std::cin >> sClass;
                     pa.insert(id, name, row, colChar - 'A', sClass);
+                    saveCSV(pa);
                     break;
                 }
                 case 2: {
-                    int id; std::cout << "Enter ID to delete: ";
+                    int id;
+                    std::cout << "Enter ID to delete: ";
                     std::cin >> id; pa.deletePassenger(id);
                     break;
                 }
                 case 3: {
-                    std::string name; std::cout << "Enter Name: ";
-                    std::cin >> name;
+                    std::string name;
+                    std::cout << "Enter Name: ";
+                    std::getline(std::cin >> std::ws, name);;
                     Passenger* p = pa.search(name);
                     if (p) std::cout << "Found: ID " << p->id << " at Seat " << p->seatRow << (char)('A' + p->seatCol) << "\n";
                     else std::cout << "Not found.\n";
@@ -173,7 +200,11 @@ void arrayInterface() {
                 case 4: pa.sort(); std::cout << "Sorted.\n"; break;
                 case 5: pa.display(); break;
                 case 6: pa.displayGrid(); break;
-                case 7: running = false; break;
+                case 7: {
+                    saveCSV(pa);
+                    running = false; 
+                    break;
+                }
                 default: std::cout << "Invalid Option.\n";
             }
         } catch (...) {

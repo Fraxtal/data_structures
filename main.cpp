@@ -13,7 +13,6 @@ void mainInterface(){
                   << "2. Linked List\n"
                   << "> ";
         if (!std::getline(std::cin, choice)) break;
-
         if (choice == "1") {
             arrayInterface();
         } else if (choice == "2") {
