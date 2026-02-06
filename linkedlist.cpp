@@ -163,7 +163,7 @@ void linkedListInterface(){
 			<< "1. Load Passenger Data" << endl
 			<< "2. Insert New Data" << endl
 			<< "3. Delete Data" << endl
-			<< "4. Search by Name" << endl
+			<< "4. Search by ID" << endl
 			<< "5. Sort Data" << endl
 			<< "6. Display Data" << endl
 			<< "7. Exit" << endl;
@@ -195,7 +195,7 @@ void linkedListInterface(){
 				}
 				case 4 : {
 					int id;
-					cout << "Please enter the name to search: ";
+					cout << "Please enter the ID to search: ";
 					cin >> id;
 					Node* temp = list.search(id);
 					if (temp != nullptr) {
@@ -204,6 +204,8 @@ void linkedListInterface(){
 						<< "Seat Row: " << temp->seatRow << endl
 						<< "Seat Column: " << temp->seatCol << endl
 						<< "Seat Class: " << temp->seatClass << endl;
+					} else {
+						cout << "ID not found!" << endl;
 					}
 					break;
 				}
