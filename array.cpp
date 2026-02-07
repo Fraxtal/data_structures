@@ -3,6 +3,8 @@
 #include <sstream>
 #include <iomanip>
 #include "array.hpp"
+#include <chrono>
+using namespace std::chrono;
 
 PassengerArray::PassengerArray() : count(0) {
     for (int i = 0; i < MAX_CAPACITY; i++) {
@@ -40,7 +42,7 @@ void loadCSV(PassengerArray& pa) {
         if (idStr.empty()) {
             continue;
         }
-        pa.insert(std::stoi(idStr), name, td::stoi(rowStr), colStr[0] - 'A', sClass);
+        pa.insertNewEntry(std::stoi(idStr), name, std::stoi(rowStr), colStr[0] - 'A', sClass);
     }
     file.close();
     std::cout << "Data loaded successfully.\n";
@@ -167,7 +169,10 @@ void arrayInterface() {
                 std::cin >> col;
                 std::cout << "Class: ";
                 std::cin >> cls;
+                auto start = high_resolution_clock::now();
                 pa.insertNewEntry(id, name, row, col - 'A', cls);
+                auto end = high_resolution_clock::now();
+                std::cout << "Insertion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
                 saveCSV(pa);
                 break;
             }
@@ -175,7 +180,10 @@ void arrayInterface() {
                 int id;
                 std::cout << "ID to delete: ";
                 std::cin >> id;
+                auto start = high_resolution_clock::now();
                 pa.deletePassengerByID(id);
+                auto end = high_resolution_clock::now();
+                std::cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
                 saveCSV(pa);
                 break;
             }
@@ -183,12 +191,17 @@ void arrayInterface() {
                 std::string name;
                 std::cout << "Enter Name: ";
                 std::getline(std::cin >> std::ws, name);
+                auto start = high_resolution_clock::now();
                 pa.searchByName(name);
+                auto end = high_resolution_clock::now();
+                std::cout << "Search Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
                 break;
             }
             case 4: {
+                auto start = high_resolution_clock::now();
                 pa.sortByID();
-                std::cout << "Sorted.\n";
+                auto end = high_resolution_clock::now();
+                std::cout << "Sort Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n" << "Sorted.\n";
                 saveCSV(pa);
                 break;
             }
