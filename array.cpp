@@ -201,7 +201,8 @@ void arrayInterface() {
                 break;
             }
             case 7: {
-                saveCSV(pa); running = false;
+                saveCSV(pa);
+                running = false;
                 break;
             }
             default: {
