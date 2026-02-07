@@ -23,8 +23,8 @@ private:
 public:
     PassengerArray();
     ~PassengerArray();
-    void insert(int id, const std::string& name, int row, int col, const std::string& seatClass);
-    void deletePassenger(int id);
+    void insertNewEntry(int id, const std::string& name, int row, int col, const std::string& seatClass);
+    void deletePassengerByID(int id);
     void searchByName(const std::string& name) const;
     void sortByID();
     void listPassengers() const;

@@ -40,13 +40,7 @@ void loadCSV(PassengerArray& pa) {
         if (idStr.empty()) {
             continue;
         }
-        pa.insert(
-            std::stoi(idStr),
-            name,
-            std::stoi(rowStr),
-            colStr[0] - 'A',
-            sClass
-        );
+        pa.insert(std::stoi(idStr), name, td::stoi(rowStr), colStr[0] - 'A', sClass);
     }
     file.close();
     std::cout << "Data loaded successfully.\n";
@@ -61,15 +55,13 @@ void saveCSV(const PassengerArray& pa) {
     file << "PassengerID,Name,SeatRow,SeatColumn,Class\n";
     for (int i = 0; i < pa.getCount(); i++) {
         Passenger* p = pa.getPassenger(i);
-        file << p->id << "," << p->name << ","
-             << p->seatRow << "," << char('A' + p->seatCol) << ","
-             << p->seatClass << "\n";
+        file << p->id << "," << p->name << "," << p->seatRow << "," << char('A' + p->seatCol) << "," << p->seatClass << "\n";
     }
     file.close();
     std::cout << "All changes saved to CSV.\n";
 }
 
-void PassengerArray::insert(int id, const std::string& name, int row, int col, const std::string& seatClass) {
+void PassengerArray::insertNewEntry(int id, const std::string& name, int row, int col, const std::string& seatClass) {
     if (count >= MAX_CAPACITY) {
         std::cout << "Manifest full.\n";
         return;
@@ -86,9 +78,7 @@ void PassengerArray::searchByName(const std::string& name) const {
     for (int i = 0; i < count; i++) {
         Passenger* p = manifest[i];
         if (p->name == name) {
-            std::cout << "Found: ID " << p->id
-                      << " at Seat " << p->seatRow
-                      << char('A' + p->seatCol) << "\n";
+            std::cout << "Found: ID " << p->id << " at Seat " << p->seatRow << char('A' + p->seatCol) << "\n";
             found = true;
         }
     }
@@ -97,7 +87,7 @@ void PassengerArray::searchByName(const std::string& name) const {
     }
 }
 
-void PassengerArray::deletePassenger(int id) {
+void PassengerArray::deletePassengerByID(int id) {
     for (int i = 0; i < count; i++) {
         if (manifest[i]->id == id) {
             Passenger* p = manifest[i];
@@ -130,9 +120,7 @@ void PassengerArray::listPassengers() const {
     std::cout << std::left << std::setw(10) << "ID" << std::setw(20) << "NAME" << "SEAT\n";
     for (int i = 0; i < count; i++) {
         Passenger* p = manifest[i];
-        std::cout << std::setw(10) << p->id
-                  << std::setw(20) << p->name
-                  << p->seatRow << char('A' + p->seatCol) << "\n";
+        std::cout << std::setw(10) << p->id<< std::setw(20) << p->name << p->seatRow << char('A' + p->seatCol) << "\n";
     }
 }
 
@@ -179,7 +167,7 @@ void arrayInterface() {
                 std::cin >> col;
                 std::cout << "Class: ";
                 std::cin >> cls;
-                pa.insert(id, name, row, col - 'A', cls);
+                pa.insertNewEntry(id, name, row, col - 'A', cls);
                 saveCSV(pa);
                 break;
             }
@@ -187,7 +175,7 @@ void arrayInterface() {
                 int id;
                 std::cout << "ID to delete: ";
                 std::cin >> id;
-                pa.deletePassenger(id);
+                pa.deletePassengerByID(id);
                 saveCSV(pa);
                 break;
             }
