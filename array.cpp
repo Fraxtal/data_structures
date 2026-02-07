@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include "array.hpp"
+#include <limits>
 #include <chrono>
 using namespace std::chrono;
 
@@ -223,4 +224,5 @@ void arrayInterface() {
             }
         }
     }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
