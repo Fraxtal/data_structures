@@ -3,7 +3,9 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <chrono>
 #include "linkedlist.hpp"
+using namespace std::chrono;
 using namespace std;
 
 LinkedList::LinkedList() = default;
@@ -19,6 +21,7 @@ void LinkedList::insertion(int id, const string& name, int row, string col, cons
 }
 
 void LinkedList::load() {
+	auto start = high_resolution_clock::now();
 	ifstream file("data/flight_passenger_data.csv");
 	if (!file.is_open()) {
 		cout << "Error: Could not read file " << endl;
@@ -26,7 +29,7 @@ void LinkedList::load() {
 	}
 	string line;
 	string temp;
-	getline(file, line); //skip the header line
+	getline(file, line);
 	while(getline(file,line)) {
 		stringstream str2(line);
 		string segmt;
@@ -41,10 +44,13 @@ void LinkedList::load() {
 		getline(str2, seatClass, ',');
 		insertion(id, name, seatRow, seatCol, seatClass);
 	}
+	auto end = high_resolution_clock::now();
 	cout << "Loaded!" << endl;
+	std::cout << "Loading Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 bool LinkedList::deletion(int id) {
+	auto start = high_resolution_clock::now();
 	if (head->id == id) {
 		Node* toDel = head;
 		head = head->next;
@@ -63,11 +69,16 @@ bool LinkedList::deletion(int id) {
 		cur = cur->next;
 	}
 	return false;
+	auto end = high_resolution_clock::now();
+	std::cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 Node* LinkedList::search(int id) {
+	auto start = high_resolution_clock::now();
     for (Node* cur = head; cur; cur = cur->next) if (cur->id == id) return cur;
     return nullptr;
+	auto end = high_resolution_clock::now();
+	std::cout << "Searching Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 Node* LinkedList::split(Node *head) {
@@ -125,6 +136,7 @@ Node* LinkedList::mergeSort(Node* head, int criteria, bool desc) {
 }
 
 void LinkedList::sort(int criteria, bool desc) {
+	auto start = high_resolution_clock::now();
 	head = mergeSort(head, criteria, desc);
 	if (head == nullptr) {
 		tail == nullptr;
@@ -135,11 +147,16 @@ void LinkedList::sort(int criteria, bool desc) {
 		cur = cur->next;
 	}
 	tail = cur;
+	auto end = high_resolution_clock::now();
+	std::cout << "Sorting Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 void LinkedList::display() const {
+	auto start = high_resolution_clock::now();
     for (Node* cur = head; cur; cur = cur->next)
         cout << cur->id << ' ' << cur->name << ' ' << cur->seatRow << cur->seatCol << '\n';
+	auto end = high_resolution_clock::now();
+	std::cout << "Display Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 Node* LinkedList::getTail() {

@@ -25,7 +25,7 @@ PassengerArray::~PassengerArray() {
 }
 
 void loadCSV(PassengerArray& pa) {
-    std::ifstream file("C:\\Users\\User\\Desktop\\Homework Folder\\DS\\data_structures\\data\\flight_passenger_data.csv");
+    std::ifstream file("data/flight_passenger_data.csv");
     if (!file.is_open()) {
         std::cout << "Error: Could not open file.\n";
         return;
@@ -50,7 +50,7 @@ void loadCSV(PassengerArray& pa) {
 }
 
 void saveCSV(const PassengerArray& pa) {
-    std::ofstream file("C:\\Users\\User\\Desktop\\Homework Folder\\DS\\data_structures\\data\\flight_passenger_data.csv");
+    std::ofstream file("data/flight_passenger_data.csv");
     if (!file.is_open()) {
         std::cout << "Error: Could not save file.\n";
         return;
