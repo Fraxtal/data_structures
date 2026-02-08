@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 #include <chrono>
+#include <windows.h> 
+#include <psapi.h> 
 #include "linkedlist.hpp"
 using namespace std::chrono;
 using namespace std;
@@ -15,7 +17,6 @@ LinkedList::~LinkedList() {
 }
 
 void LinkedList::insertion(int id, const string& name, int row, string col, const string& seatClass) {
-	auto start = high_resolution_clock::now();
     Node* n = new Node{id, name, row, col, seatClass, nullptr};
     if (!head) {
 		head = tail = n;
@@ -23,8 +24,6 @@ void LinkedList::insertion(int id, const string& name, int row, string col, cons
     else { 
 		tail->next = n; tail = n; 
 	}
-	auto end = high_resolution_clock::now();
-	std::cout << "Insertion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 void LinkedList::load() {
@@ -54,6 +53,13 @@ void LinkedList::load() {
 	auto end = high_resolution_clock::now();
 	cout << "Loaded!" << endl;
 	std::cout << "Loading Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
+	PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
+        std::cout << "Memory Usage (Linked List): " 
+                  << pmc.WorkingSetSize / 1024 << " KB" << std::endl; // Convert to KB
+    } else {
+        std::cerr << "Unable to retrieve memory information." << std::endl;
+    }
 }
 
 bool LinkedList::deletion(int id) {

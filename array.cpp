@@ -23,7 +23,7 @@ PassengerArray::PassengerArray() : count(0) {
 void PassengerArray::printMemoryUsage() const {
     PROCESS_MEMORY_COUNTERS pmc;
     if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
-        std::cout << "Memory Usage: " 
+        std::cout << "Memory Usage (Array): " 
                   << pmc.WorkingSetSize / 1024 << " KB" << std::endl; // Convert to KB
     } else {
         std::cerr << "Unable to retrieve memory information." << std::endl;
