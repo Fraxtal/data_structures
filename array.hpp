@@ -31,9 +31,10 @@ public:
     void displaySeatAvailabilityGrid() const;
     int getCount() const { return count; }
     Passenger* getPassenger(int index) const { return manifest[index]; }
+    void printMemoryUsage() const;
 };
 
 void loadCSV(PassengerArray& pa);
 void saveCSV(const PassengerArray& pa);
 void arrayInterface();
-void arrayInterface();
+

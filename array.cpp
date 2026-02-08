@@ -2,6 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <windows.h> 
+#include <psapi.h> 
 #include "array.hpp"
 #include <limits>
 #include <chrono>
@@ -15,6 +17,16 @@ PassengerArray::PassengerArray() : count(0) {
         for (int c = 0; c < COLS; c++) {
             grid[r][c] = nullptr;
         }
+    }
+}
+
+void PassengerArray::printMemoryUsage() const {
+    PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
+        std::cout << "Memory Usage: " 
+                  << pmc.WorkingSetSize / 1024 << " KB" << std::endl; // Convert to KB
+    } else {
+        std::cerr << "Unable to retrieve memory information." << std::endl;
     }
 }
 
@@ -142,6 +154,7 @@ void PassengerArray::displaySeatAvailabilityGrid() const {
 void arrayInterface() {
     PassengerArray pa;
     loadCSV(pa);
+    pa.printMemoryUsage();
     bool running = true;
     while (running) {
         std::cout <<
