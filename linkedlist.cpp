@@ -15,9 +15,16 @@ LinkedList::~LinkedList() {
 }
 
 void LinkedList::insertion(int id, const string& name, int row, string col, const string& seatClass) {
+	auto start = high_resolution_clock::now();
     Node* n = new Node{id, name, row, col, seatClass, nullptr};
-    if (!head) head = tail = n;
-    else { tail->next = n; tail = n; }
+    if (!head) {
+		head = tail = n;
+	}
+    else { 
+		tail->next = n; tail = n; 
+	}
+	auto end = high_resolution_clock::now();
+	std::cout << "Insertion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 void LinkedList::load() {
@@ -50,7 +57,6 @@ void LinkedList::load() {
 }
 
 bool LinkedList::deletion(int id) {
-	auto start = high_resolution_clock::now();
 	if (head->id == id) {
 		Node* toDel = head;
 		head = head->next;
@@ -69,16 +75,11 @@ bool LinkedList::deletion(int id) {
 		cur = cur->next;
 	}
 	return false;
-	auto end = high_resolution_clock::now();
-	std::cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 Node* LinkedList::search(int id) {
-	auto start = high_resolution_clock::now();
     for (Node* cur = head; cur; cur = cur->next) if (cur->id == id) return cur;
     return nullptr;
-	auto end = high_resolution_clock::now();
-	std::cout << "Searching Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 Node* LinkedList::split(Node *head) {
@@ -203,17 +204,21 @@ void linkedListInterface(){
 					int id;
 					cout << "Please enter the ID to delete: ";
 					cin >> id;
+					auto start = high_resolution_clock::now();
 					if (list.deletion(id)) {
 						cout << "Deletion completed!" << endl;
 					} else {
 						cout << "ID not found!" << endl;
 					}
+					auto end = high_resolution_clock::now();
+					std::cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 					break;
 				}
 				case 4 : {
 					int id;
 					cout << "Please enter the ID to search: ";
 					cin >> id;
+					auto start = high_resolution_clock::now();
 					Node* temp = list.search(id);
 					if (temp != nullptr) {
 						cout << "ID: " << temp->id << endl
@@ -224,6 +229,8 @@ void linkedListInterface(){
 					} else {
 						cout << "ID not found!" << endl;
 					}
+					auto end = high_resolution_clock::now();
+					std::cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 					break;
 				}
 				case 5 : {
