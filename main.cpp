@@ -2,17 +2,18 @@
 #include <fstream>
 #include "array.hpp"
 #include "linkedlist.hpp"
+using namespace std;
 
 void mainInterface(){
-  std::string choice;
+  string choice;
     while (true) {
-        std::cout << "-----------------------------------------------------------------------\n"
+        cout << "-----------------------------------------------------------------------\n"
                   << " Please Select Your Desired Data Structure Demo (1 or 2 or q to quit)\n"
                   << "-----------------------------------------------------------------------\n"
                   << "1. Array\n"
                   << "2. Linked List\n"
                   << "> ";
-        if (!std::getline(std::cin, choice)) break;
+        if (!getline(cin, choice)) break;
         if (choice == "1") {
             arrayInterface();
         } else if (choice == "2") {
@@ -20,7 +21,7 @@ void mainInterface(){
         } else if (choice == "q" || choice == "Q") {
             break;
         } else {
-            std::cout << "Invalid input\n";
+            cout << "Invalid input\n";
         }
     }
 }

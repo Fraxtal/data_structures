@@ -65,16 +65,16 @@ void LinkedList::load()
 	}
 	auto end = high_resolution_clock::now();
 	cout << "Loaded!" << endl;
-	std::cout << "Loading Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
+	cout << "Loading Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 	PROCESS_MEMORY_COUNTERS pmc;
 	if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
 	{
-		std::cout << "Memory Usage (Linked List): "
-				  << pmc.WorkingSetSize / 1024 << " KB" << std::endl; // Convert to KB
+		cout << "Memory Usage (Linked List): "
+				  << pmc.WorkingSetSize / 1024 << " KB" << endl; // Convert to KB
 	}
 	else
 	{
-		std::cerr << "Unable to retrieve memory information." << std::endl;
+		cerr << "Unable to retrieve memory information." << endl;
 	}
 }
 
@@ -211,16 +211,16 @@ void LinkedList::sort(int criteria, bool desc)
 	}
 	tail = cur;
 	auto end = high_resolution_clock::now();
-	std::cout << "Sorting Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
+	cout << "Sorting Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 void LinkedList::display() const
 {
 	auto start = high_resolution_clock::now();
 	for (Node *cur = head; cur; cur = cur->next)
-		cout << cur->id << ' ' << cur->name << ' ' << cur->seatRow << cur->seatCol << '\n';
+		cout << cur->id << ' ' << cur->name << ' ' << cur->seatRow << cur->seatCol << ' ' << cur->seatClass << '\n';
 	auto end = high_resolution_clock::now();
-	std::cout << "Display Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
+	cout << "Display Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
 }
 
 Node *LinkedList::getTail()
@@ -253,96 +253,111 @@ void linkedListInterface()
 				 << "6. Display Data" << endl
 				 << "7. Exit" << endl;
 			cin >> temp;
+			cin.ignore(); //to clear input buffer
 			option = stoi(temp);
 			switch (option)
 			{
-			case 1:
-			{
-				list.load();
-				break;
-			}
-			case 2:
-			{
-				string name, seatCol, seatClass;
-				int seatRow;
-				cout << "Please enter name, seat row, seat column and seat class: ";
-				cin >> name >> seatRow >> seatCol >> seatClass;
-				list.insertion((list.getTail()->id + 1), name, seatRow, seatCol, seatClass);
-				break;
-			}
-			case 3:
-			{
-				int id;
-				cout << "Please enter the ID to delete: ";
-				cin >> id;
-				auto start = high_resolution_clock::now();
-				if (list.deletion(id))
+				case 1:
 				{
-					cout << "Deletion completed!" << endl;
+					list.load();
+					break;
 				}
-				else
+				case 2:
 				{
-					cout << "ID not found!" << endl;
+					string name, seatCol, seatClass, temp;
+					int seatRow;
+					cout << "Please enter information as below: " << endl << "Name: ";
+					getline(cin, name);
+					cout << "Seat Row: ";
+					getline(cin, temp);
+					seatRow = stoi(temp);
+					cout << "Seat Column: ";
+					cin >> seatCol;
+					cout << "Seat Class: ";
+					cin >> seatClass;
+					cin.ignore();
+					auto start = high_resolution_clock::now();
+					list.insertion((list.getTail()->id + 1), name, seatRow, seatCol, seatClass);
+					auto end = high_resolution_clock::now();
+					cout << "Insert successful" << endl;
+					cout << "Insertion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
+					break;
 				}
-				auto end = high_resolution_clock::now();
-				std::cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
-				break;
-			}
-			case 4:
-			{
-				int id;
-				cout << "Please enter the ID to search: ";
-				cin >> id;
-				auto start = high_resolution_clock::now();
-				Node *temp = list.search(id);
-				if (temp != nullptr)
+				case 3:
 				{
-					cout << "ID: " << temp->id << endl
-						 << "Name: " << temp->name << endl
-						 << "Seat Row: " << temp->seatRow << endl
-						 << "Seat Column: " << temp->seatCol << endl
-						 << "Seat Class: " << temp->seatClass << endl;
+					int id;
+					cout << "Please enter the ID to delete: ";
+					cin >> id;
+					auto start = high_resolution_clock::now();
+					if (list.deletion(id))
+					{
+						cout << "Deletion completed!" << endl;
+					}
+					else
+					{
+						cout << "ID not found!" << endl;
+					}
+					auto end = high_resolution_clock::now();
+					cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
+					break;
 				}
-				else
+				case 4:
 				{
-					cout << "ID not found!" << endl;
+					int id;
+					cout << "Please enter the ID to search: ";
+					cin >> id;
+					auto start = high_resolution_clock::now();
+					Node *temp = list.search(id);
+					if (temp != nullptr)
+					{
+						cout << "ID: " << temp->id << endl
+							<< "Name: " << temp->name << endl
+							<< "Seat Row: " << temp->seatRow << endl
+							<< "Seat Column: " << temp->seatCol << endl
+							<< "Seat Class: " << temp->seatClass << endl;
+					}
+					else
+					{
+						cout << "ID not found!" << endl;
+					}
+					auto end = high_resolution_clock::now();
+					cout << "Search Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
+					break;
 				}
-				auto end = high_resolution_clock::now();
-				std::cout << "Deletion Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
-				break;
-			}
-			case 5:
-			{
-				int criteria;
-				string descending;
-				cout << "Please select the criteria to sort(Enter option's number):" << endl
-					 << "1. ID" << endl
-					 << "2. Name" << endl
-					 << "3. Seat" << endl;
-				cin >> criteria;
-				cout << "Do you want to sort it as descending order?(Enter \"Y\" for yes): ";
-				cin >> descending;
-				bool desc = (descending == "Y" ? true : false);
-				list.sort(criteria, desc);
-				cout << "Sort Done" << endl;
-				break;
-			}
-			case 6:
-			{
-				list.display();
-				cout << "The end of data" << endl;
-				break;
-			}
-			case 7:
-			{
-				running = false;
-				break;
-			}
-			default:
-			{
-				cout << "Invalid input! Please try again" << endl;
-				break;
-			}
+				case 5:
+				{
+					int criteria;
+					string temp;
+					cout << "Please select the criteria to sort(Enter option's number):" << endl
+						<< "1. ID" << endl
+						<< "2. Name" << endl
+						<< "3. Seat" << endl;
+					cin.ignore();
+					getline(cin, temp);
+					criteria = stoi(temp);
+					cout << "Do you want to sort it as descending order?(Enter \"Y\" for yes): ";
+					cin >> temp;
+					bool desc = (temp == "Y" ? true : false);
+					list.sort(criteria, desc);
+					cout << "Sort Done" << endl;
+					break;
+				}
+				case 6:
+				{
+					list.display();
+					cout << "The end of data" << endl;
+					break;
+				}
+				case 7:
+				{
+					running = false;
+					break;
+				}
+				default:
+				{
+					cout << "Invalid input! Please try again" << endl;
+					break;
+				}
 			}
 		}
 		catch (exception exception)
