@@ -153,7 +153,10 @@ void PassengerArray::displaySeatAvailabilityGrid() const {
 
 void arrayInterface() {
     PassengerArray pa;
+    auto start = high_resolution_clock::now();
     loadCSV(pa);
+    auto end = high_resolution_clock::now();
+    std::cout << "Load Time: " << duration_cast<microseconds>(end - start).count() << " microseconds\n";
     pa.printMemoryUsage();
     bool running = true;
     while (running) {
