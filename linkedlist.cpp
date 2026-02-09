@@ -46,7 +46,6 @@ void LinkedList::load()
 		return;
 	}
 	string line;
-	string temp;
 	getline(file, line);
 	while (getline(file, line))
 	{
