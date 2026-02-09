@@ -27,6 +27,6 @@ This project was developed through collaboration by the following team members:
 
 - [Ng Wei Hao](https://github.com/02-is-02)
 
-- [Sean Ng Yi Da](https://github.com/SeanEYD)
+- [Tan Anh Kang](https://github.com/Okaniiiii18520)
 
 - [Teoh Kai Chen](https://github.com/KingstonTeoh)
