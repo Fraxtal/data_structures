@@ -14,7 +14,7 @@ An experimentation of using c++ code to manipulate data structures.
 - **array:** [array.cpp](array.cpp), [array.hpp](array.hpp)
 - **linked list:** [linkedlist.cpp](linkedlist.cpp), [linkedlist.hpp](linkedlist.hpp)
 - **entry point:** [main.cpp](main.cpp)
-- **sample data:** [data/flight_passenger_data.csv](data/flight_passenger_data.csv)
+- **sample dataset:** [data/flight_passenger_data.csv](data/flight_passenger_data.csv)
 
 **Purpose:**
 - Small, educational implementations to demonstrate common operations (insert, delete, traverse, search) and to serve as a starting point for exercises.
