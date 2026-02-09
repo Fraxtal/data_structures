@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "array.hpp"
 #include "linkedlist.hpp"
 using namespace std;
