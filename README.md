@@ -19,9 +19,14 @@ An experimentation of using c++ code to manipulate data structures.
 **Purpose:**
 - Small, educational implementations to demonstrate common operations (insert, delete, traverse, search) and to serve as a starting point for exercises.
 
-**Team:**
-- Nicholas Pang Tze Shen
-- Ng Wei Hao
-- Teoh Kai Chen
-- Tan Anh Kang
+## 👥 Contributors
 
+This project was developed through collaboration by the following team members:
+
+- [Nicholas Pang Tze Shen](https://github.com/Fraxtal) 
+
+- [Ng Wei Hao](https://github.com/02-is-02)
+
+- [Sean Ng Yi Da](https://github.com/SeanEYD)
+
+- [Teoh Kai Chen](https://github.com/KingstonTeoh)
