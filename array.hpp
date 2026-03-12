@@ -19,7 +19,6 @@ private:
     Passenger* manifest[MAX_CAPACITY];
     Passenger* grid[ROWS][COLS];
     int count;
-
 public:
     PassengerArray();
     ~PassengerArray();
@@ -35,6 +34,8 @@ public:
 };
 
 void loadCSV(PassengerArray& pa);
+
 void saveCSV(const PassengerArray& pa);
+
 void arrayInterface();
 

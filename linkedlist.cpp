@@ -69,7 +69,7 @@ void LinkedList::load()
 	if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
 	{
 		cout << "Memory Usage (Linked List): "
-				  << pmc.WorkingSetSize / 1024 << " KB" << endl; // Convert to KB
+				  << pmc.WorkingSetSize / 1024 << " KB" << endl;
 	}
 	else
 	{
@@ -149,19 +149,16 @@ Node *LinkedList::merge(Node *first, Node *second, int criteria, bool desc)
 	bool cmpResult = false;
 	switch (criteria)
 	{
-		// ID
 		case 1:
 		{
 			cmpResult = (first->id > second->id);
 			break;
 		}
-		// name
 		case 2:
 		{
 			cmpResult = (first->name >= second->name);
 			break;
 		}
-		// seat
 		case 3:
 		{
 			cmpResult = seatCompare(first, second);
@@ -252,7 +249,7 @@ void linkedListInterface()
 				 << "6. Display Data" << endl
 				 << "7. Exit" << endl;
 			cin >> temp;
-			cin.ignore(); //to clear input buffer
+			cin.ignore();
 			option = stoi(temp);
 			switch (option)
 			{
